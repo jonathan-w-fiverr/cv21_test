@@ -5,12 +5,16 @@ from resume_parser import resumeparse
 
 
 
+
+
 app = FastAPI()
 
 
 @app.get("/")
 def read_root():
-    return {"Hello": "World"}
+    data = resumeparse.read_file('/Users/jonathan.waldman/PycharmProjects/pythonProject/resume/import/Resume-Jonathan-Waldman.pdf')
+
+    return data
 
 
 @app.get("/items/{item_id}")
