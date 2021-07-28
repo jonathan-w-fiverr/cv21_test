@@ -1,22 +1,25 @@
 from typing import Optional
-
-from fastapi import FastAPI
+import sys
+from fastapi import FastAPI, UploadFile, File
 from resume_parser import resumeparse
-
-
-
-
-
+import aiofiles
 app = FastAPI()
 
 
 @app.get("/")
-def read_root():
-    data = resumeparse.read_file('/Users/jonathan.waldman/PycharmProjects/pythonProject/resume/import/Resume-Jonathan-Waldman.pdf')
-
+def stam(fileName):
+    data = resumeparse.read_file_return(fileName)
     return data
 
 
-@app.get("/items/{item_id}")
-def read_item(item_id: int, q: Optional[str] = None):
-    return {"item_id": item_id, "q": q}
+@app.post("/import")
+async def post_endpoint(in_file: UploadFile=File(...)):
+    # ...
+    async with aiofiles.open('tmp/example', 'wb') as out_file:
+        while content := await in_file.read(1024):
+            print(123123)# async read chunk
+            await out_file.write(content)  # async write chunk
+
+    data = resumeparse.read_file_return('tmp/example')
+    return data
+
