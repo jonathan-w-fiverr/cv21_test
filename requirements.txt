@@ -2,3 +2,4 @@ numpy==1.19.5
 scikit-learn==0.21.3
 pandas
 Flask
+flask-cors

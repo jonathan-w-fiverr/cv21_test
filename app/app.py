@@ -3,9 +3,11 @@ import pandas as pd
 import pickle
 
 from flask import Flask, request, jsonify
+from flask_cors import CORS
 from sklearn.feature_extraction.text import TfidfVectorizer
 
 app = Flask(__name__)
+CORS(app)
 
 gigs_dataset = pd.read_csv("in/gigs_dataset.csv")
 tfidf = pickle.load(open("in/tfidf_tags_transformer.pickle", "rb"))
