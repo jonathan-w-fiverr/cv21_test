@@ -7,6 +7,7 @@ RUN apt-get update
 RUN apt-get install -y libmagic1
 RUN apt-get install -y openssh-client git && mkdir -p -m 0600 ~/.ssh && ssh-keyscan github.com >> ~/.ssh/known_hosts
 COPY . .
+RUN pip3 install git+https://git@github.com/jonathan-w-fiverr/resume_parser.git@master
 RUN pip install fastapi
 RUN pip install uvicorn
 RUN pip install python-magic
@@ -24,6 +25,5 @@ RUN python -m nltk.downloader universal_tagset
 RUN python -m nltk.downloader wordnet
 RUN python -m nltk.downloader brown
 RUN python -m nltk.downloader maxent_ne_chunker
-RUN --mount=type=ssh pip install git+ssh://git@github.com/jonathan-w-fiverr/resume_parser.git@master
 
 CMD [ "uvicorn", "--host", "0.0.0.0" , "main:app", "--reload"]
