@@ -21,7 +21,7 @@ def hello_world():
 def predict():
     data = request.get_json()
     skills = data.get("skills")
-    text = ", ".join([str(i) for i in skills])
+    text = ", ".join([str(i) for i in skills]).encode("ascii", "ignore")
 
     gigs = get_related_gigs_prod(gigs_dataset, tfidf, gigs_tfidf, text, thresh=0.2)
     print("RESULT:", gigs)
